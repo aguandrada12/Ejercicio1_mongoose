@@ -5,11 +5,11 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 
-const Tareas = require('./models/Tareas');
-const Proyecto = require('./models/Proyecto');
-
 const projectsRoutes = require('./routes/projectsRoutes');
 app.use('/proyectos', projectsRoutes);
+
+const tasksRoutes = require('./routes/tasksRoutes');
+app.use('/tareas', tasksRoutes);
 
 // *** Conexión a la Base de Datos ***
 const DB_URI = 'mongodb://localhost:27017/miBaseDeDatosMERN';
