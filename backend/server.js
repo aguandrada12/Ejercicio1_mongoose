@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-/* const Proyecto = require('./Models/Usuario');
-  */
-// Importamos nuestro nuevo módulo de rutas
-/* const userRoutes = require('./Routes/userRoutes'); */
+const Tareas = require('./models/Tareas');
+const Proyecto = require('./models/Proyecto');
+
+const projectsRoutes = require('./routes/projectsRoutes');
+app.use('/proyectos', projectsRoutes);
 
 // *** Conexión a la Base de Datos ***
 const DB_URI = 'mongodb://localhost:27017/miBaseDeDatosMERN';
@@ -19,10 +20,6 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Servidor Express funcionando y conectado a MongoDB (esperemos!)');
 });
- 
-// Le decimos a la app: "Para cualquier ruta que empiece con /api/users,
-/* app.use('/api/users', userRoutes); */
- 
 
 //Crear el Middleware para Rutas No Encontradas (404)
 app.use((req, res, next) => {
