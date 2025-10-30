@@ -7,9 +7,9 @@ const Tareas = require('../models/Tareas');
 router.post('/', async (req, res, next) => {
   try {
     const datosNuevaTarea = req.body;
-    console.log('Datos recibidos para crear proyecto:', datosNuevaTarea);
+    console.log('Datos recibidos para crear tarea:', datosNuevaTarea);
  
-    const nuevaTarea= new Proyecto(datosNuevaTarea);
+    const nuevaTarea= new Tareas(datosNuevaTarea);
     const tareaGuardada = await nuevaTarea.save();
 
     res.status(201).json({
@@ -27,7 +27,7 @@ router.post('/', async (req, res, next) => {
 // Método HTTP: GET
 router.get('/', async (req, res, next) => {
   try {
-      const tareas = await Tareas.find({});
+      const tareas = await Tareas.find({}).populate('project');;
  
       res.status(200).json(tareas);
  
@@ -42,7 +42,7 @@ router.get('/:id', async (req, res, next) => {
     const TareaId = req.params.id;
     console.log('Buscando tarea con ID:', TareaId);
  
-    const tarea = await Tareas.findById(TareaId);
+    const tarea = await Tareas.findById(TareaId).populate('project');
  
     if (!tarea) {
       const error = new Error('Tarea no encontrada');
@@ -76,7 +76,7 @@ router.put('/:id', async (req, res, next) => {
     );
  
     if (!tareaActualizada) {
-      const error = new Error('Proyecto no encontrado para actualizar');
+      const error = new Error('Tarea no encontrada para actualizar');
       error.status = 404;
       return next(error);
     }
