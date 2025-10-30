@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use(express.json());
+
 const Tareas = require('./models/Tareas');
 const Proyecto = require('./models/Proyecto');
 
@@ -15,7 +17,6 @@ mongoose.connect(DB_URI)
   .then(() => console.log('¡Conexión exitosa a MongoDB!'))
   .catch(err => console.error('Error al conectar a MongoDB:', err));
  
-app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Servidor Express funcionando y conectado a MongoDB (esperemos!)');
